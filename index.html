@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Shubham Enterprises — Leave a Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white:        #FFFFFF;
+  --off-white:    #F4F4F5;
+  --grey-1:       #A1A1AA;
+  --grey-2:       #52525B;
+  --grey-3:       #27272A;
+  --glass-bg:     rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-hover:  rgba(255,255,255,0.09);
+  --accent:       rgba(255,255,255,0.80);
+}
+
+html, body {
+  min-height: 100%;
+  background: #000000;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  color: var(--white);
+}
+
+/* ── BACKGROUND ── */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 40% at 10% 8%,  rgba(255,255,255,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 45% at 90% 90%,  rgba(255,255,255,0.03) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 50% 50%,  rgba(20,20,20,0.60)   0%, transparent 80%);
+  pointer-events: none;
+}
+
+/* subtle grid lines */
+.bg-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* corner vignette */
+.bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.70) 100%);
+  pointer-events: none;
+}
+
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px) clamp(30px, 6vw, 50px);
+}
+
+/* ── LOGO ── */
+.logo-block {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.10s forwards;
+  margin-bottom: clamp(4px, 1.5vw, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.brand-logo-img {
+  display: block;
+  width: clamp(180px, 55vw, 360px);
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter: brightness(1.05) drop-shadow(0 0 20px rgba(255,255,255,0.12));
+}
+
+/* ── STARS ── */
+.stars-block {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.22s forwards;
+  text-align: center;
+  margin-bottom: clamp(12px, 2.5vw, 18px);
+}
+
+.stars {
+  display: inline-flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.star {
+  font-size: clamp(17px, 4vw, 20px);
+  color: var(--white);
+  display: inline-block;
+  animation: starPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.60));
+}
+.star:nth-child(2) { animation-delay: 0.12s; }
+.star:nth-child(3) { animation-delay: 0.24s; }
+.star:nth-child(4) { animation-delay: 0.36s; }
+.star:nth-child(5) { animation-delay: 0.48s; }
+
+.stars-label {
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--grey-1);
+}
+
+/* ── CATEGORY FILTER ROW ── */
+.cat-block {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.32s forwards;
+  width: 100%;
+  max-width: 460px;
+  margin-bottom: clamp(10px, 2vw, 14px);
+}
+
+.cat-row {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cat-btn {
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--grey-1);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.20s ease;
+  white-space: nowrap;
+}
+
+.cat-btn:hover {
+  background: rgba(255,255,255,0.10);
+  color: var(--white);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.cat-btn.active {
+  background: var(--white);
+  color: #000000;
+  border-color: var(--white);
+  box-shadow: 0 0 18px rgba(255,255,255,0.18);
+}
+
+/* ── CARD ── */
+.card-wrap {
+  width: 100%;
+  max-width: 460px;
+  padding: 1px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.04) 40%,
+    rgba(255,255,255,0.12) 100%);
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.42s both;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.60),
+    0 2px 0 rgba(255,255,255,0.04) inset;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-radius: 15px;
+  padding: clamp(22px, 5vw, 30px) clamp(20px, 5vw, 28px) clamp(18px, 4vw, 24px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* inner shimmer top line */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 40%, rgba(255,255,255,0.60) 50%, rgba(255,255,255,0.35) 60%, transparent 100%);
+}
+
+/* corner accent top-right */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 16px; height: 16px;
+  border-top: 1px solid rgba(255,255,255,0.22);
+  border-right: 1px solid rgba(255,255,255,0.22);
+  pointer-events: none;
+}
+
+/* corner accent bottom-left */
+.card-inner-corner {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  width: 16px; height: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.22);
+  border-left: 1px solid rgba(255,255,255,0.22);
+  pointer-events: none;
+}
+
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.card-label-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15));
+}
+.card-label-line.r { background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent); }
+.card-label-text {
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--grey-1);
+  white-space: nowrap;
+}
+
+.review-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(13.5px, 3.4vw, 15px);
+  font-weight: 400;
+  line-height: 1.90;
+  color: var(--white);
+  min-height: 90px;
+  word-break: break-word;
+  transition: opacity 0.18s ease;
+  letter-spacing: 0.005em;
+}
+.review-text.fade { opacity: 0; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: clamp(14px, 3vw, 20px) 0;
+}
+.div-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12));
+}
+.div-line.r { background: linear-gradient(90deg, rgba(255,255,255,0.12), transparent); }
+.div-gem {
+  color: rgba(255,255,255,0.25);
+  font-size: 8px;
+  line-height: 1;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.btn-cta {
+  flex: 1;
+  min-height: 50px;
+  padding: 0 18px;
+  background: var(--white);
+  color: #000000;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(9px, 2.3vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.80);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+  box-shadow: 0 4px 18px rgba(255,255,255,0.10);
+}
+
+.btn-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.30) 50%, transparent 100%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(255,255,255,0.18);
+}
+.btn-cta:hover::after { animation: shimmerSweep 0.60s ease forwards; }
+.btn-cta:active { transform: scale(0.97); }
+
+.btn-cta.success {
+  background: rgba(255,255,255,0.10);
+  color: var(--white);
+  border-color: rgba(255,255,255,0.30);
+}
+
+.btn-refresh {
+  flex: 0 0 50px;
+  height: 50px;
+  background: var(--glass-bg);
+  color: var(--grey-1);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.20s ease;
+}
+.btn-refresh:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.25);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+.btn-refresh:active { transform: scale(0.95); }
+.btn-refresh svg { transition: transform 0.45s cubic-bezier(.4,2,.55,.9); }
+.btn-refresh.spinning svg { transform: rotate(360deg); }
+
+/* ── BOTTOM STRIP ── */
+.bottom-strip {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.58s forwards;
+  text-align: center;
+  margin-top: clamp(14px, 3vw, 20px);
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: var(--glass-bg);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--grey-1);
+}
+
+.badge-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--white);
+  animation: dotPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(255,255,255,0.80);
+}
+
+.address-text {
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: var(--grey-2);
+  letter-spacing: 0.03em;
+  line-height: 1.7;
+}
+
+.hint-text {
+  margin-top: 9px;
+  font-size: 10.5px;
+  color: var(--grey-1);
+  letter-spacing: 0.02em;
+  min-height: 16px;
+  transition: color 0.3s ease;
+}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes starPulse {
+  0%, 100% { transform: scale(1);    filter: drop-shadow(0 0 3px rgba(255,255,255,0.50)); }
+  50%       { transform: scale(1.1); filter: drop-shadow(0 0 12px rgba(255,255,255,0.90)); }
+}
+@keyframes shimmerSweep {
+  0%   { left: -120%; }
+  100% { left: 160%; }
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.25; transform: scale(0.55); }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<canvas id="particles"></canvas>
+
+<div class="page">
+
+  <div class="logo-block">
+    <img src="logo.png" alt="Shubham Enterprises" class="brand-logo-img">
+  </div>
+
+  <div class="stars-block">
+    <div class="stars">
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+    </div>
+    <div class="stars-label">Share your experience</div>
+  </div>
+
+  <!-- CATEGORY FILTER -->
+  <div class="cat-block">
+    <div class="cat-row" id="catRow">
+      <button class="cat-btn" data-cat="phones" onclick="selectCat(this)">Phones</button>
+      <button class="cat-btn" data-cat="accessories" onclick="selectCat(this)">Accessories</button>
+      <button class="cat-btn" data-cat="tablets" onclick="selectCat(this)">Tablets</button>
+      <button class="cat-btn" data-cat="laptops" onclick="selectCat(this)">Laptops</button>
+      <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+    </div>
+  </div>
+
+  <div class="card-wrap">
+    <div class="card">
+      <div class="card-inner-corner"></div>
+      <div class="card-label">
+        <div class="card-label-line"></div>
+        <span class="card-label-text">Your Review</span>
+        <div class="card-label-line r"></div>
+      </div>
+      <div class="review-text" id="reviewText">Loading your review&hellip;</div>
+      <div class="divider">
+        <div class="div-line"></div>
+        <span class="div-gem">&#9670;</span>
+        <div class="div-line r"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-cta" id="btnCopy" onclick="copyAndGo()">Copy &amp; Post on Google</button>
+        <button class="btn-refresh" id="btnRefresh" onclick="refreshReview()" title="New review">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-strip">
+    <div class="badge-row">
+      <div class="badge"><span class="badge-dot"></span>Premium Tech &amp; Mobiles in Sigra</div>
+    </div>
+    <div class="address-text">Shop No.4, opposite Axis Bank, Shastri Nagar, Sigra,<br>Varanasi, Uttar Pradesh 221002</div>
+    <div class="hint-text" id="hint">Tap to copy your review, then paste it on Google.</div>
+  </div>
+
+</div>
+
+<script>
+var reviewLink = "https://search.google.com/local/writereview?placeid=ChIJQ8Mb-vwtjjkRbF6jZMYtQ4E";
+var activeCat  = "all";
+
+// ════════════════════════════════════════════════════════
+//  PHONES
+// ════════════════════════════════════════════════════════
+var P_OPENERS = [
+  "Shubham Enterprises in Sigra is the first name that comes to mind when anyone in Varanasi asks where to buy a genuine smartphone",
+  "Visited Shubham Enterprises opposite Axis Bank in Sigra and the smartphone selection genuinely rivals the best stores in any metro city",
+  "Was looking for a specific iPhone model in Varanasi and Shubham Enterprises in Sigra had it in stock with full warranty, no hassle at all",
+  "Finally found a store in Varanasi where you can buy flagship phones without worrying about authenticity, Shubham Enterprises in Sigra is it",
+  "My search for a Samsung Galaxy S-series in Varanasi ended at Shubham Enterprises and the experience from selection to billing was genuinely smooth",
+  "Shubham Enterprises opposite Axis Bank Sigra is where I send everyone who asks me for a reliable phone shop in Varanasi, no exceptions",
+  "Walked into Shubham Enterprises for a budget phone and left understanding the entire smartphone market better thanks to genuinely expert guidance",
+  "The range of smartphones at Shubham Enterprises in Sigra is extraordinary, from entry-level Infinix to flagship iPhone 16 Pro Max, all authentic",
+  "Bought a Nothing Phone from Shubham Enterprises and the unboxing experience, sealed box, original accessories, is exactly what premium retail should feel like",
+  "Shubham Enterprises has established itself as the go-to smartphone destination in the Sigra area and the depth of their inventory confirms why",
+  "Needed a Poco flagship urgently and Shubham Enterprises in Sigra had it in stock same day, sealed, with bill, and at a fair price",
+  "Discovered Shubham Enterprises while looking for an Oppo Reno and found a store that makes phone buying genuinely enjoyable rather than stressful",
+  "The moment you walk into Shubham Enterprises opposite Axis Bank you can tell this is a store that takes smartphone retail seriously at every level",
+  "Have been buying phones in Varanasi for years and Shubham Enterprises in Sigra is the first store where I have never had a single complaint",
+  "Shubham Enterprises stocks Motorola, Vivo, Realme, Redmi, and Samsung alongside Apple, making it the most comprehensive phone store I have seen locally",
+  "A colleague recommended Shubham Enterprises for my new phone purchase and the authenticity of the product and the fairness of the price were both outstanding",
+  "Shubham Enterprises in Shastri Nagar Sigra understands that buying a smartphone is a significant decision and their team treats it with that seriousness",
+  "The refurbished phone section at Shubham Enterprises is a revelation, genuinely certified quality at accessible prices, ideal for a secondary device",
+  "Upgraded my phone at Shubham Enterprises and the staff guided me through specs and value comparison with a depth of knowledge I did not expect locally",
+  "Shubham Enterprises carries Tecno and Acno alongside premium brands making it a store that genuinely serves every budget without compromising on authenticity",
+  "The iPhone range at Shubham Enterprises in Sigra includes the latest models and the staff can walk you through the differences between every variant",
+  "Trusted Shubham Enterprises for a Vivo V-series purchase and the experience, sealed device, original charger, full warranty, was completely reassuring",
+  "Shubham Enterprises stocks Realme GT and Number series which serious performance buyers will appreciate, in a store that actually keeps flagship stock",
+  "Found the Samsung Galaxy A-series I needed at Shubham Enterprises with a speed and ease that reminded me why proximity and reliability matter",
+  "Shubham Enterprises opposite Axis Bank Sigra is the kind of phone store Varanasi deserved and has now thankfully found, authentic, knowledgeable, and fair",
+  "A friend pointed me to Shubham Enterprises for a Redmi Note purchase and I walked out with a sealed box, full accessories, and complete confidence",
+  "Shubham Enterprises makes buying a phone in Varanasi feel as reliable and professional as any branded showroom in a bigger city",
+  "The Motorola Edge series available at Shubham Enterprises is a reminder that this store does not limit itself to mainstream brands alone"
+];
+
+var P_DETAILS = [
+  "The iPhone 16 range at Shubham Enterprises is available in all variants and the staff can clearly explain the differences in chip, camera, and display",
+  "Samsung Galaxy S25 series is available at Shubham Enterprises with proper warranty documentation, a sealed box, and no grey-market uncertainty whatsoever",
+  "The Nothing Phone models at Shubham Enterprises come with the original cable, charger brick, and documentation, a properly complete unboxing experience",
+  "Oppo Find and Reno series are well-stocked at Shubham Enterprises and the camera-focused buyer will find the team genuinely knowledgeable about image quality",
+  "Vivo X and V series at Shubham Enterprises are presented with honest guidance on which variant suits which use case rather than just upselling",
+  "Realme GT and GT Neo series at Shubham Enterprises make performance buying accessible and the staff understand the specs conversation at a serious level",
+  "Poco X and F series are available at Shubham Enterprises for the performance buyer on a budget and every unit is properly sealed with full warranty",
+  "Redmi Note series at Shubham Enterprises covers the full lineup giving buyers genuine choice across storage and camera configurations with full support",
+  "The Motorola Edge and G series at Shubham Enterprises appeal to buyers who value clean software and reliable build quality over spec-sheet maximalism",
+  "Infinix Note and Zero series at Shubham Enterprises are an excellent discovery for value buyers who want large screens and capable cameras under budget",
+  "Tecno Spark and Phantom series at Shubham Enterprises cover the entry-level market comprehensively without sacrificing the store's authenticity guarantee",
+  "Shubham Enterprises carries refurbished iPhones and Samsung flagships that are certified and presented with honest disclosure of grade and condition",
+  "The Acno brand entry-level phones at Shubham Enterprises are a revelation for buyers needing a reliable first smartphone at genuine budget pricing",
+  "iPhone 15 refurbished units at Shubham Enterprises are a genuinely smart buy, proper quality check, new accessories, and significant savings over new",
+  "Samsung Galaxy refurbished models at Shubham Enterprises are presented with the same care as new stock, honest grading and a reliable after-service guarantee",
+  "The staff at Shubham Enterprises helped me compare the Poco F6 and Realme GT Neo without bias and the recommendation they gave proved exactly right",
+  "Shubham Enterprises has every colour variant of the latest iPhone in stock which saved me the trouble of waiting or visiting multiple stores across Varanasi",
+  "The Vivo T-series at Shubham Enterprises is perfect for buyers who want reliable performance and a long-lasting battery at a sensible price point",
+  "Redmi 13 and 14 series at Shubham Enterprises demonstrate that entry-level does not mean unreliable when you buy from the right store",
+  "The Samsung Galaxy M-series range at Shubham Enterprises is the best value proposition for buyers who want Samsung quality without flagship pricing",
+  "Nothing Phone 2a at Shubham Enterprises comes with the satisfying glyph interface intact and the staff are enthusiastic enough about the brand to explain it well",
+  "Oppo A-series at Shubham Enterprises is ideally positioned for first-time smartphone buyers who want a quality device at an accessible price",
+  "The Motorola G85 at Shubham Enterprises is a best-in-class recommendation from the staff for buyers who prioritise camera quality in the midrange",
+  "Infinix Hot and Smart series at Shubham Enterprises extend the store's coverage to buyers on every budget without any compromise on product authenticity",
+  "Shubham Enterprises refurbished section is where I found a pristine iPhone 13 at a price that made a flagship genuinely accessible for my student budget",
+  "The Realme C-series at Shubham Enterprises proves that even the most budget-conscious buyer can get authentic, reliable hardware from a trustworthy local store",
+  "Shubham Enterprises stocks Poco M-series which is arguably the best bang-for-buck option in the market and the team can demonstrate exactly why"
+];
+
+var P_HI = [
+  "Shubham Enterprises Sigra mein naya phone lene gaye aur iPhone 16 ka sealed box dekhkar genuinely reassured feel kiya, ekdum original",
+  "Samsung Galaxy S25 chahiye tha Varanasi mein, Shubham Enterprises opposite Axis Bank par mil gaya full warranty ke saath, bilkul smooth experience",
+  "Nothing Phone lena tha aur Shubham Enterprises ne sealed box, original cable aur charger ke saath deliver kiya, sab kuch perfect tha",
+  "Shubham Enterprises mein refurbished iPhone dekhe aur quality itni achi thi ki naya aur purana mein difference dhundhna mushkil tha",
+  "Poco F6 aur Realme GT Neo mein confuse tha, Shubham Enterprises ke staff ne bina kisi pressure ke clearly compare karke sahi guidance di",
+  "Redmi Note 13 Pro Shubham Enterprises se liya aur sealed box, original accessories, bill sab mila, koi compromise nahi",
+  "Oppo Reno ke liye Shubham Enterprises gaya tha aur variety itni achi thi ki ek hi jagah se decision lena asaan ho gaya",
+  "Vivo V30 chahiye tha aur Shubham Enterprises Sigra mein available tha, price fair tha aur staff ne feature bhi acche se explain kiye",
+  "Motorola Edge series Shubham Enterprises mein dekhi aur clean software aur build quality ki baat sunkar genuinely impress hua",
+  "Infinix Note ke liye Varanasi mein kafi jagah gayi lekin Shubham Enterprises mein jo stock aur service mili woh sab se best thi",
+  "Shubham Enterprises mein Tecno Phantom series dekha aur budget mein genuinely achi quality milna ek pleasant surprise tha",
+  "Acno phones Shubham Enterprises mein hain aur pehli baar smartphone khareedne walon ke liye yeh ek genuinely reliable option hai",
+  "iPhone 15 refurbished Shubham Enterprises se liya aur condition aur savings dono ne happy kar diya, honest grading di unhone",
+  "Samsung refurbished model Shubham Enterprises se liya aur naye phone jaisa experience mila, yeh store genuinely trustworthy hai",
+  "Shubham Enterprises mein staff ne meri budget sunke Redmi 14 5G recommend kiya aur woh choice genuinely right sabit hui",
+  "Realme C-series ke liye budget tha aur Shubham Enterprises ne original sealed unit fair price par di, ekdum genuine experience",
+  "Shubham Enterprises opposite Axis Bank Sigra, Varanasi ka best phone store hai, yeh mera personal experience hai baar baar",
+  "Vivo T3x lena tha, Shubham Enterprises par stock tha, price sahi tha, staff helpful tha, aur box bhi sealed tha, perfect visit",
+  "Samsung Galaxy M35 Shubham Enterprises se liya aur value for money itni achi hai ki Samsung quality pe bargain jaisi feel aayi",
+  "Shubham Enterprises ne mujhe pehli baar refurbished market ke baare mein genuinely educate kiya aur experience ne trust build kar diya"
+];
+
+// ════════════════════════════════════════════════════════
+//  ACCESSORIES
+// ════════════════════════════════════════════════════════
+var A_OPENERS = [
+  "Shubham Enterprises in Sigra is where I go for all my accessories after repeatedly being disappointed by quality issues elsewhere in Varanasi",
+  "The accessories section at Shubham Enterprises opposite Axis Bank is one of the most comprehensive I have found in any electronics store locally",
+  "Visited Shubham Enterprises for a power bank and discovered a full ecosystem of original accessories that has now replaced all my older third-party gear",
+  "Every cable, charger, and audio accessory at Shubham Enterprises in Sigra is original and the staff can tell you exactly why that matters",
+  "The boAt accessories range at Shubham Enterprises is genuinely extensive and every piece is properly boxed and original, not a clone in sight",
+  "For phone accessories in Varanasi there is Shubham Enterprises and then there is everything else, the gap in quality and authenticity is significant",
+  "Shubham Enterprises in Shastri Nagar Sigra stocks original chargers for every major brand and the difference from fake chargers is immediately obvious",
+  "The Bluetooth speakers at Shubham Enterprises are proper party-grade sound and the staff let you listen before buying which makes selection easy",
+  "Bought my first proper wireless keyboard and mouse setup from Shubham Enterprises and the build quality has outlasted three cheaper alternatives",
+  "Shubham Enterprises carries accessories for every device category from phone cases to laptop bags and the quality standard is consistent throughout",
+  "The Samsung OG cases at Shubham Enterprises are a world apart from the generic alternatives sold everywhere else, perfect fit and genuine protection",
+  "Could not find original iPhone accessories in Varanasi until Shubham Enterprises, and now it is the only place I shop for Apple-adjacent gear",
+  "The Type-C accessories range at Shubham Enterprises is exactly what a modern device owner needs, fast charging cables, hubs, and adaptors all original",
+  "Shubham Enterprises carries professional USB microphones and recording accessories which makes it the destination for content creators in Varanasi",
+  "Walked into Shubham Enterprises for a screen protector and walked out with an entire accessory upgrade that has genuinely improved my daily device experience",
+  "The hard disk and storage accessories at Shubham Enterprises cover every capacity need from portable SSDs to high-capacity spinning drives",
+  "Bought a high-capacity power bank from Shubham Enterprises and the charging speed and reliability have been genuinely impressive across many months of use",
+  "Shubham Enterprises is where the serious tech user in Varanasi shops for accessories because the store simply will not stock anything that is not genuine",
+  "The laptop bags at Shubham Enterprises combine protection and style and the range covers everything from slim sleeves to full-featured backpacks",
+  "Found a genuine boAt Rockerz from Shubham Enterprises and the audio quality and battery life have been exceptional, reinforcing why original matters"
+];
+
+var A_DETAILS = [
+  "The boAt Airdopes range at Shubham Enterprises includes every model in the lineup and the staff can help you pick the right fit and sound signature",
+  "Samsung OG cases at Shubham Enterprises are available for every current Galaxy model and the fit tolerance is precise in a way third-party cases never are",
+  "iPhone original cases at Shubham Enterprises, from clear to leather to silicone, are authentic Apple accessories that protect and complement the device perfectly",
+  "The Type-C fast charging cables at Shubham Enterprises are rated properly and the staff can explain why cable quality directly affects charging speed",
+  "Original charger bricks at Shubham Enterprises are available for every major brand and buying an original charger is always worth it for battery health",
+  "The power banks at Shubham Enterprises range from compact ten thousand mAh to high-capacity thirty thousand mAh with fast charging across the range",
+  "boAt Stone Bluetooth speakers at Shubham Enterprises are the perfect party companion, loud, clear, and waterproof variants available for outdoor use",
+  "The wireless headphone range at Shubham Enterprises covers Sony, boAt, and JBL with the staff able to demonstrate sound quality before purchase",
+  "Type-C earphones at Shubham Enterprises are original and the difference in audio quality from generic earphones is immediately and dramatically apparent",
+  "Mechanical keyboards at Shubham Enterprises are available in multiple switch types and the staff can explain which switch suits typing versus gaming",
+  "Gaming mice at Shubham Enterprises come from proper brands with sensor quality and ergonomics that make a genuine difference for precision tasks",
+  "The portable hard disk range at Shubham Enterprises covers one terabyte to five terabyte in slim designs that are ideal for laptop users on the go",
+  "External SSDs at Shubham Enterprises are a revelation for transfer speed and the range covers major brands with proper warranty documentation",
+  "Laptop bags at Shubham Enterprises range from minimalist sleeves to expedition-grade backpacks and every option prioritises device protection properly",
+  "Mobile covers at Shubham Enterprises are available for virtually every current model and the variety of materials and protection levels is genuinely impressive",
+  "Tempered glass screen protectors at Shubham Enterprises are properly matched to device dimensions, not generic cuts that leave edges exposed",
+  "The USB microphone selection at Shubham Enterprises is ideal for content creators and podcasters who want studio-grade recording from a simple plug-in setup",
+  "OTG adaptors and USB-C hubs at Shubham Enterprises make smartphone and laptop connectivity significantly more versatile for professional users",
+  "The boAt Nirvana wireless earbuds at Shubham Enterprises offer active noise cancellation that genuinely impresses in the mid-tier price segment",
+  "Shubham Enterprises stocks original fast wireless charging pads for both Qi and MagSafe standards, future-proofing your charging setup completely",
+  "The Samsung Galaxy Buds original at Shubham Enterprises are the genuinely seamless audio companion for Galaxy phone users that third-party earbuds cannot match",
+  "Laptop cooling pads and stands at Shubham Enterprises are practical quality-of-life upgrades that the team recommends sensibly based on usage pattern",
+  "HDMI and display adaptors at Shubham Enterprises cover every standard from mini-HDMI to USB-C to full-size and the quality is consistently reliable",
+  "boAt Rockerz headphones at Shubham Enterprises are the signature around-ear option for buyers who want excellent battery life with punchy bass response",
+  "The smartwatch and fitness band accessories at Shubham Enterprises include straps, chargers, and screen protectors for all major wearable brands",
+  "Phone ring holders and grip accessories at Shubham Enterprises are a small but important category the store stocks with the same quality standard",
+  "Car mount and wireless car charger combos at Shubham Enterprises are ideal for the daily commuter who wants their phone safe and charged simultaneously"
+];
+
+var A_HI = [
+  "Shubham Enterprises Sigra mein boAt Airdopes liye aur original product ka fark immediately samjh aaya, quality clone se bilkul alag hai",
+  "Samsung OG case Shubham Enterprises se liya aur fit itna perfect tha ki lagta tha phone ke liye hi bana hai, no gap no loose fit",
+  "iPhone original charger brick Shubham Enterprises se liya kyunki fake charger battery ko damage kar raha tha, ab charging safe feel hoti hai",
+  "High capacity power bank Shubham Enterprises se liya aur trip pe phone teen baar full charge kiya, quality outstanding hai",
+  "boAt Stone speaker party ke liye Shubham Enterprises se liya aur sound quality ne genuinely surprise kar diya is price range mein",
+  "Wireless headphones Shubham Enterprises mein try karke liye aur quality itni achi thi ki brand naam sunke already value feel hui",
+  "Type-C cable Shubham Enterprises se liya aur fast charging ka difference immediately pata chala, pehle ka cable shayad fake tha",
+  "Mechanical keyboard Shubham Enterprises se liya aur typing experience itna improve hua ki pehle ki keyboard pe wapas jaane ka mann nahi",
+  "Portable hard disk Shubham Enterprises se liya aur ek saal ke baad bhi speed aur reliability bilkul same hai, genuinely quality product",
+  "Laptop bag Shubham Enterprises se liya aur padding aur build quality ne genuinely impress kar diya, device ka protection serious hai",
+  "Mobile cover Shubham Enterprises se liya aur phone model ke liye exact fit tha, generic covers ki tarah edge exposed nahi chhodi",
+  "Tempered glass Shubham Enterprises se liya aur exactly phone ki screen pe fit aaya, dust nahi, bubble nahi, aur protection proper hai",
+  "USB microphone Shubham Enterprises se liya podcast ke liye aur recording quality ne genuinely studio jaisi feel di, worth every rupee",
+  "boAt Nirvana ANC earbuds Shubham Enterprises se liye aur noise cancellation itna effective hai ki metro mein bhi music clearly suna",
+  "Wireless charging pad Shubham Enterprises se liya aur MagSafe ke saath compatibility perfect thi, convenience genuinely upgrade ho gayi",
+  "Samsung Galaxy Buds Shubham Enterprises se liye aur Galaxy phone ke saath seamless pairing ne genuinely wowed kar diya pehle use mein",
+  "HDMI adaptor Shubham Enterprises se liya presentation ke liye aur laptop se TV connection ek second mein perfect ho gayi",
+  "Car wireless charger Shubham Enterprises se liya aur ab driving mein phone mounted, charged, aur hands-free, sab ek jagah se",
+  "Shubham Enterprises Sigra mein accessories ki quality dekhe toh samjho ki original product kitna better hota hai clone se",
+  "External SSD Shubham Enterprises se liya aur file transfer speed ne genuinely shock kar diya, old hard disk se comparison hi nahi"
+];
+
+// ════════════════════════════════════════════════════════
+//  TABLETS
+// ════════════════════════════════════════════════════════
+var T_OPENERS = [
+  "Was searching for a tablet in Varanasi and Shubham Enterprises in Sigra had the widest and most authentic tablet selection I found anywhere locally",
+  "Shubham Enterprises opposite Axis Bank Sigra is where my iPad purchase happened and the experience was exactly what premium tablet retail should feel like",
+  "The tablet section at Shubham Enterprises impressed me immediately with its breadth, Apple, Samsung, Realme, Xiaomi, and Lenovo all under one roof",
+  "Bought a Samsung Galaxy Tab from Shubham Enterprises and the sealed box with original stylus and accessories gave complete confidence from the first moment",
+  "Shubham Enterprises in Shastri Nagar Sigra is the go-to destination for tablets in Varanasi and the variety confirms why the reputation is well-deserved",
+  "My daughter needed a tablet for school and Shubham Enterprises helped us find the ideal Realme Pad that balanced performance, screen size, and budget perfectly",
+  "The iPad range at Shubham Enterprises covers every variant from iPad mini to iPad Pro and the staff can explain which model suits which use case",
+  "Shubham Enterprises has established itself as the most reliable tablet retailer in the Sigra area and a single visit confirms that reputation entirely",
+  "Needed a Lenovo Tab for work presentations and Shubham Enterprises had exactly the model with the right storage and connectivity options in stock",
+  "The Redmi Pad series at Shubham Enterprises makes tablet ownership accessible for the budget buyer without sacrificing the authenticity guarantee",
+  "Shubham Enterprises carries the full Moto Tab range and the staff understand the difference between the variants clearly enough to guide any buyer",
+  "Samsung Galaxy Tab S series at Shubham Enterprises with the original S-Pen is a genuine creative tool and the store stocks the accessories to match",
+  "Found the Infinix tablet I was researching at Shubham Enterprises in Sigra and the value for money at that price point is genuinely hard to argue with"
+];
+
+var T_DETAILS = [
+  "iPad Air with M2 chip at Shubham Enterprises is the ideal tablet for creative professionals who want genuine performance without the Pro price tag",
+  "iPad Pro with M4 chip at Shubham Enterprises is the closest thing to a laptop-replacement tablet and the staff can walk you through its full capability",
+  "Samsung Galaxy Tab S9 series at Shubham Enterprises comes with the S-Pen included and the Super AMOLED display is genuinely stunning in person",
+  "Samsung Galaxy Tab A9 at Shubham Enterprises is the ideal everyday tablet, large screen, solid battery, and a price point that makes sense for family use",
+  "Realme Pad 2 at Shubham Enterprises offers a large display and strong processor for students who want a capable note-taking and study device",
+  "Redmi Pad SE at Shubham Enterprises is a genuinely impressive entry into the budget tablet space with a screen that competes with pricier alternatives",
+  "Infinix XPAD at Shubham Enterprises is an underrated tablet option that the staff at Shubham Enterprises were helpful in surfacing for budget-aware buyers",
+  "Xiaomi Pad 6 at Shubham Enterprises is a strong Android alternative for buyers who want near-iPad quality at a significantly lower price",
+  "Lenovo Tab P12 at Shubham Enterprises is the ideal meeting-room and presentation tablet with its large crisp display and quality speaker system",
+  "Moto Tab G70 at Shubham Enterprises brings Motorola's clean software experience to the tablet space with a large screen and long-lasting battery",
+  "iPad mini at Shubham Enterprises is the most portable premium tablet option for readers, one-handed note-takers, and frequent travellers",
+  "Samsung Galaxy Tab S6 Lite at Shubham Enterprises is the best entry point for anyone wanting a Samsung tablet with S-Pen at an accessible price",
+  "The Realme Pad Mini at Shubham Enterprises is a compact, affordable option for basic tablet use that the staff honestly present as exactly what it is",
+  "Lenovo Tab M10 at Shubham Enterprises is a practical family tablet that works beautifully for streaming, video calling, and light student tasks",
+  "The Redmi Pad Pro at Shubham Enterprises represents genuinely serious hardware at a midrange price and the performance in day-to-day use confirms it",
+  "Shubham Enterprises staff helped me choose between the iPad and Samsung Galaxy Tab with a clear, bias-free comparison that made the decision straightforward",
+  "Buying a tablet for art and design work at Shubham Enterprises meant getting guidance on which device supports the best stylus input, genuinely helpful",
+  "Shubham Enterprises stacks genuine accessories alongside each tablet model so you can complete your setup with a case, keyboard, and stylus in one visit",
+  "The Xiaomi Pad 6 Pro at Shubham Enterprises is a premium Android tablet that challenges the iPad at a price that is significantly more accessible",
+  "Shubham Enterprises had the Samsung Galaxy Tab S9 FE in stock when every other local retailer said it was unavailable, which sealed their reputation for me"
+];
+
+var T_HI = [
+  "Shubham Enterprises Sigra mein iPad Air liya aur M2 chip ke saath performance genuinely laptop jaisi feel aayi, worth every rupee",
+  "Samsung Galaxy Tab S9 Shubham Enterprises se liya aur S-Pen ke saath note-taking itni smooth ho gayi ki notebook almost band ho gayi",
+  "Redmi Pad SE Shubham Enterprises se liya beti ke liye school ke liye aur screen quality aur battery ne teacher bhi impress kar di",
+  "Realme Pad 2 Shubham Enterprises opposite Axis Bank se liya aur budget mein itna capable tablet milna genuinely pleased kar gaya",
+  "Lenovo Tab Shubham Enterprises se liya presentation ke liye aur office meeting mein large display ne genuinely professional impression diya",
+  "Shubham Enterprises mein iPad mini dekha aur reading ke liye size aur display quality itni perfect thi ki on-spot hi decision ho gaya",
+  "Moto Tab Shubham Enterprises se liya aur Motorola ka clean software experience tablet par bhi waise hi smooth tha jaise phone par",
+  "Infinix XPAD Shubham Enterprises mein dekha aur is price range mein jo features mile woh genuinely competitive hai, helpful staff ne guide kiya",
+  "Samsung Galaxy Tab S6 Lite Shubham Enterprises se liya S-Pen ke liye aur drawing aur notes dono ke liye perfect tool ban gaya",
+  "Xiaomi Pad 6 Pro Shubham Enterprises se liya aur performance dekh ke iPad se compare karna mushkil ho gaya, genuinely premium feel"
+];
+
+// ════════════════════════════════════════════════════════
+//  LAPTOPS
+// ════════════════════════════════════════════════════════
+var L_OPENERS = [
+  "Shubham Enterprises in Sigra is the most reliable destination for laptop purchases in Varanasi and my HP purchase there confirmed that completely",
+  "The laptop section at Shubham Enterprises opposite Axis Bank has a curated selection of HP, Lenovo, and Dell that covers every professional need",
+  "Bought a Lenovo ThinkPad from Shubham Enterprises and the genuine product with original warranty card and registered serial number gave total confidence",
+  "Was nervous about buying a laptop locally but Shubham Enterprises in Sigra completely changed that, the authenticity and after-service are both excellent",
+  "Shubham Enterprises helped me choose between a Dell and an HP with a technical comparison that showed genuine product knowledge and no sales pressure",
+  "The Dell XPS range at Shubham Enterprises in Shastri Nagar Sigra is available in all configurations and the staff understand the specs at a serious level",
+  "My HP Spectre from Shubham Enterprises came with complete original accessories and the warranty registration was smooth and properly handled",
+  "Shubham Enterprises is where serious laptop buyers in Varanasi go because the store stocks business, creator, and gaming laptops with equal competence",
+  "Needed a Lenovo IdeaPad for a student and Shubham Enterprises had the right configuration at a fair price with a proper bill and warranty card",
+  "The Dell Inspiron range at Shubham Enterprises makes good laptop ownership accessible and the staff can spec-match to any budget intelligently",
+  "Shubham Enterprises has earned my laptop business permanently after a flawless HP Pavilion purchase that has performed exactly as described for a year",
+  "The laptop bags and accessories at Shubham Enterprises complement the laptop purchase perfectly and completing the setup in one visit is genuinely convenient"
+];
+
+var L_DETAILS = [
+  "HP Envy series at Shubham Enterprises is the ideal creator laptop, thin, powerful, and with a display quality that is genuinely impressive for the price",
+  "Lenovo ThinkPad at Shubham Enterprises is the right choice for professionals who value keyboard quality, reliability, and enterprise-grade build",
+  "Dell XPS 13 at Shubham Enterprises is a flagship thin-and-light that the staff can properly justify against alternatives at similar price points",
+  "HP Pavilion series at Shubham Enterprises is the most practical everyday laptop range, balancing performance, portability, and value convincingly",
+  "Lenovo IdeaPad 5 at Shubham Enterprises is a genuine student favourite and the store stocks the right configurations for academic workloads",
+  "Dell Inspiron 15 at Shubham Enterprises is the most popular purchase for families who want a capable home laptop at a sensible all-in cost",
+  "HP Victus gaming laptop at Shubham Enterprises brings dedicated GPU performance to buyers who want gaming capability without full gaming laptop pricing",
+  "Lenovo Legion series at Shubham Enterprises is for serious gamers who want consistent thermal performance and the staff understand GPU and CPU specs properly",
+  "Dell Vostro series at Shubham Enterprises is targeted at small business buyers and the build and port selection is genuinely suited to professional use",
+  "HP ProBook at Shubham Enterprises is the business-class choice for buyers who want enterprise durability and MIL-SPEC ratings at manageable prices",
+  "Lenovo Yoga series at Shubham Enterprises is ideal for buyers who want the flexibility of tablet and laptop modes in a premium convertible package",
+  "The Dell Latitude at Shubham Enterprises is the enterprise reliability choice and the team can advise on configurations suitable for corporate deployment",
+  "HP laptop purchases at Shubham Enterprises come with complete original accessories including the power adapter, documentation, and properly sealed packaging",
+  "Lenovo Gaming laptops at Shubham Enterprises are available across the Slim 5i Gaming to full Legion 9i range for every tier of gaming performance need",
+  "Dell G-series gaming laptops at Shubham Enterprises offer a strong gaming-per-rupee proposition and the team can compare GPU performance honestly",
+  "The Lenovo ThinkBook series at Shubham Enterprises bridges consumer and business design with a minimalist look and professional-grade reliability",
+  "HP 15s and 15t series at Shubham Enterprises is the highest-selling everyday laptop and the range of processor and storage configurations is comprehensive",
+  "Shubham Enterprises completes every laptop purchase with a recommendation from their accessories range including bags, cooling pads, and external storage",
+  "Dell Precision workstations at Shubham Enterprises are available for professional buyers who need dedicated GPU and high RAM for creative and engineering work",
+  "The Lenovo ThinkPad X1 Carbon at Shubham Enterprises is for buyers who want the absolute lightest laptop with no compromise on keyboard or build quality"
+];
+
+var L_HI = [
+  "Shubham Enterprises Sigra mein HP Envy liya aur creator laptop ki display quality aur thin build ne genuinely metro city store jaisa feel diya",
+  "Lenovo ThinkPad Shubham Enterprises se liya aur keyboard quality aur build itni solid hai ki yeh choice clearly right sabit ho rahi hai",
+  "Dell XPS Shubham Enterprises opposite Axis Bank se liya aur original warranty card aur registered serial ne genuinely confident kar diya",
+  "HP Pavilion Shubham Enterprises se liya ghar ke liye aur ek saal baad bhi performance same hai, quality aur service dono top-notch",
+  "Lenovo IdeaPad 5 Shubham Enterprises se liye bete ke liye college ke liye aur battery life aur processor ne genuinely impress kiya",
+  "Dell Inspiron Shubham Enterprises se liya aur staff ne configuration pehle samjhaya phir suggest kiya, bilkul sahi guidance mili",
+  "HP Victus gaming Shubham Enterprises se liya aur gaming performance dedicated GPU ke saath genuinely solid hai is price mein",
+  "Lenovo Legion Shubham Enterprises se liya gaming ke liye aur thermal management itna accha hai ki heavy sessions mein bhi lag nahi baadhta",
+  "Shubham Enterprises mein laptop khareedne se pehle multiple options compare karwa sakte ho bina kisi pressure ke, yeh genuinely rare hai",
+  "Dell G15 gaming laptop Shubham Enterprises se liya aur GPU performance ne genuinely wowed kar diya, value for money outstanding hai"
+];
+
+// ════════════════════════════════════════════════════════
+//  GENERAL / SERVICE
+// ════════════════════════════════════════════════════════
+var G_SERVICE = [
+  "Shubham Enterprises in Sigra combines authentic original products with genuinely knowledgeable staff and that combination is rare and valuable in Varanasi",
+  "The team at Shubham Enterprises opposite Axis Bank takes the time to understand your actual use case before making any recommendation, no pressure selling",
+  "Shubham Enterprises has built a reputation in the Sigra area that is entirely justified by the consistency of product quality and the reliability of service",
+  "Bought three devices from Shubham Enterprises over two years and the experience has been identical each time, fair, honest, and completely genuine",
+  "The pricing at Shubham Enterprises is transparent and competitive and the staff do not inflate margins on accessories once you have decided on a device",
+  "Shubham Enterprises is the best gadget store opposite Axis Bank in Sigra and the trust it has built locally is evident from the steady flow of customers",
+  "The after-sales guidance at Shubham Enterprises is something other stores do not offer, they explain setup, warranty registration, and care properly",
+  "For original, authentic electronics in Varanasi there is genuinely no store that matches Shubham Enterprises in Shastri Nagar Sigra for reliability",
+  "The store atmosphere at Shubham Enterprises is professional without being intimidating and the team welcome questions from first-time buyers genuinely",
+  "Shubham Enterprises has turned every person I have referred into a regular customer and the feedback from each has been uniformly positive",
+  "The billing process at Shubham Enterprises is transparent and the GST invoice is always accurate and provided without prompting, a rare and appreciated detail",
+  "Shubham Enterprises is not just selling gadgets, it is building a trustworthy tech retail relationship with Varanasi one honest sale at a time",
+  "Every product at Shubham Enterprises comes from authorised channels and the staff can verify this instantly, making grey market concerns completely irrelevant",
+  "The demo devices at Shubham Enterprises are properly maintained and trying before buying is always encouraged, reflecting genuine confidence in the products",
+  "Shubham Enterprises has become the anchor tech retail destination in the Sigra commercial area and the surrounding neighbourhood clearly agrees",
+  "The warranty claim support at Shubham Enterprises is something customers genuinely praise and the store stands behind every product it sells without hesitation",
+  "Shubham Enterprises staff keep themselves updated on the latest launches and the guidance on new releases is impressively current and accurate",
+  "The trust factor at Shubham Enterprises is built on years of authentic products and honest pricing and that trust is the store's greatest asset",
+  "Shubham Enterprises treats every customer as a long-term relationship rather than a transaction and the repeat business it generates reflects that philosophy",
+  "For tech buyers in Varanasi who have been burned by counterfeit products before, Shubham Enterprises is the relief and resolution they have been looking for",
+  "Shubham Enterprises' location opposite Axis Bank in Sigra makes it easy to find and the range inside makes it impossible to leave without exactly what you need",
+  "The consistent five-star reputation of Shubham Enterprises in Sigra is no accident, it is the result of deliberate commitment to genuine products and honest service",
+  "Shubham Enterprises is the store that Varanasi's tech community recommends to each other and that peer trust is the most reliable endorsement possible",
+  "Every staff member at Shubham Enterprises knows their products deeply enough to have a real conversation rather than reciting specifications from a price list",
+  "The exchange and service policy at Shubham Enterprises is clearly communicated upfront and the follow-through matches the promise every single time",
+  "Shubham Enterprises makes buying electronics in Varanasi a genuinely premium experience and the city's tech buyers are better off for having it",
+  "Shubham Enterprises Sigra par trust ka ek hi reason hai, genuinely original products aur honest team, koi shortcut nahi kisi bhi cheez mein",
+  "Shubham Enterprises mein jo pricing transparency hai woh genuinely rare hai, bill mein jo hai wahi pay karo, koi hidden charge nahi",
+  "Shubham Enterprises opposite Axis Bank Sigra Varanasi ka best tech store hai kyunki authenticity aur knowledge dono ek saath milti hai",
+  "Shubham Enterprises se koi bhi khareedari karo, return mein trust milta hai aur woh genuinely invaluable hai gadget buying mein"
+];
+
+// ════════════════════════════════════════════════════════
+//  UTILITY
+// ════════════════════════════════════════════════════════
+function rnd() {
+  if (window.crypto && window.crypto.getRandomValues) {
+    var a = new Uint32Array(1);
+    window.crypto.getRandomValues(a);
+    return a[0] / 4294967296;
+  }
+  return Math.random();
+}
+function pick(a) { return a[Math.floor(rnd() * a.length)]; }
+
+var buf = [], BUF_MAX = 24;
+function addBuf(t) { buf.push(t); if (buf.length > BUF_MAX) buf.shift(); }
+function inBuf(t) {
+  return buf.some(function(b) {
+    var wa = new Set(b.toLowerCase().split(/\s+/).slice(0, 14));
+    var wb = new Set(t.toLowerCase().split(/\s+/).slice(0, 14));
+    var c = 0; wa.forEach(function(w) { if (wb.has(w)) c++; });
+    return c / Math.max(wa.size, wb.size, 1) > 0.40;
+  });
+}
+
+function compose() {
+  var cat = activeCat;
+  var t = Math.floor(rnd() * 16);
+
+  if (cat === 'phones') {
+    if (t < 4)  return pick(P_OPENERS) + ". " + pick(P_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 7)  return pick(P_OPENERS) + ". " + pick(P_HI) + ".";
+    if (t < 10) return pick(P_HI) + ". " + pick(P_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 13) return pick(P_OPENERS) + ". " + pick(G_SERVICE) + ".";
+    return pick(P_DETAILS) + ". " + pick(G_SERVICE) + ". Shubham Enterprises Sigra — best phone store in Varanasi.";
+  }
+
+  if (cat === 'accessories') {
+    if (t < 4)  return pick(A_OPENERS) + ". " + pick(A_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 7)  return pick(A_OPENERS) + ". " + pick(A_HI) + ".";
+    if (t < 10) return pick(A_HI) + ". " + pick(A_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 13) return pick(A_OPENERS) + ". " + pick(G_SERVICE) + ".";
+    return pick(A_DETAILS) + ". " + pick(G_SERVICE) + ". Accessories ke liye Shubham Enterprises Sigra is the only address.";
+  }
+
+  if (cat === 'tablets') {
+    if (t < 4)  return pick(T_OPENERS) + ". " + pick(T_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 7)  return pick(T_OPENERS) + ". " + pick(T_HI) + ".";
+    if (t < 10) return pick(T_HI) + ". " + pick(T_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 13) return pick(T_OPENERS) + ". " + pick(G_SERVICE) + ".";
+    return pick(T_DETAILS) + ". " + pick(G_SERVICE) + ". Best tablet store in Varanasi is Shubham Enterprises Sigra.";
+  }
+
+  if (cat === 'laptops') {
+    if (t < 4)  return pick(L_OPENERS) + ". " + pick(L_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 7)  return pick(L_OPENERS) + ". " + pick(L_HI) + ".";
+    if (t < 10) return pick(L_HI) + ". " + pick(L_DETAILS) + ". " + pick(G_SERVICE) + ".";
+    if (t < 13) return pick(L_OPENERS) + ". " + pick(G_SERVICE) + ".";
+    return pick(L_DETAILS) + ". " + pick(G_SERVICE) + ". Laptop khareedna ho toh Shubham Enterprises Sigra, full stop.";
+  }
+
+  // ALL
+  var roll = Math.floor(rnd() * 20);
+  if (roll < 3)  return pick(P_OPENERS) + ". " + pick(P_DETAILS) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 5)  return pick(A_OPENERS) + ". " + pick(A_DETAILS) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 7)  return pick(T_OPENERS) + ". " + pick(T_DETAILS) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 9)  return pick(L_OPENERS) + ". " + pick(L_DETAILS) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 11) return pick(P_HI) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 13) return pick(A_HI) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 15) return pick(T_HI) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 17) return pick(L_HI) + ". " + pick(G_SERVICE) + ".";
+  if (roll < 19) return pick(G_SERVICE) + " " + pick(P_DETAILS) + ".";
+  return pick(G_SERVICE) + " " + pick(A_DETAILS) + ".";
+}
+
+function buildReview() {
+  var v, n = 0;
+  do { v = compose(); n++; } while (inBuf(v) && n < 50);
+  addBuf(v);
+  return v;
+}
+
+var currentReview = "";
+
+function displayReview(anim) {
+  var el = document.getElementById("reviewText");
+  if (anim) {
+    el.classList.add("fade");
+    setTimeout(function() {
+      currentReview = buildReview();
+      el.textContent = currentReview;
+      el.classList.remove("fade");
+    }, 160);
+  } else {
+    currentReview = buildReview();
+    el.textContent = currentReview;
+  }
+}
+
+function selectCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  activeCat = btn.getAttribute('data-cat');
+  buf = []; // reset buffer on category change
+  refreshReview();
+}
+
+function refreshReview() {
+  var btn = document.getElementById("btnRefresh");
+  btn.classList.add("spinning");
+  displayReview(true);
+  setTimeout(function() { btn.classList.remove("spinning"); }, 430);
+  var cb = document.getElementById("btnCopy");
+  cb.textContent = "Copy & Post on Google";
+  cb.classList.remove("success");
+  document.getElementById("hint").textContent = "Tap to copy your review, then paste it on Google.";
+}
+
+function copyAndGo() {
+  var btn = document.getElementById("btnCopy");
+  function afterCopy() {
+    btn.textContent = "Copied! Opening Google\u2026 \u2713";
+    btn.classList.add("success");
+    document.getElementById("hint").textContent = "Paste it in the review box on Google. \uD83D\uDCF1";
+    setTimeout(function() { window.open(reviewLink, "_blank"); }, 900);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(currentReview).then(afterCopy).catch(fallback);
+  } else { fallback(); }
+  function fallback() {
+    var ta = document.createElement("textarea");
+    ta.value = currentReview;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand("copy"); } catch(e) {}
+    document.body.removeChild(ta);
+    afterCopy();
+  }
+}
+
+window.addEventListener("DOMContentLoaded", function() { displayReview(false); });
+
+// ── PARTICLE SYSTEM (white dust) ──────────────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('particles');
+  var ctx = canvas.getContext('2d');
+  var W, H, dpr;
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function Particle() { this.reset(true); }
+  Particle.prototype.reset = function(init) {
+    this.x  = Math.random() * W;
+    this.y  = init ? Math.random() * H : H + 8;
+    this.r  = Math.random() * 1.0 + 0.25;
+    this.vx = (Math.random() - 0.5) * 0.18;
+    this.vy = -(Math.random() * 0.28 + 0.07);
+    this.life  = Math.random() * Math.PI;
+    this.speed = 0.004 + Math.random() * 0.005;
+  };
+
+  var particles = [];
+  for (var i = 0; i < 35; i++) { particles.push(new Particle()); }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life += p.speed;
+      if (p.y < -12) { p.reset(false); continue; }
+      var alpha = Math.sin(p.life) * 0.35;
+      if (alpha < 0) { p.reset(false); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
