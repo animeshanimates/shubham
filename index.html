@@ -1043,18 +1043,30 @@ function buildReview() {
 var currentReview = "";
 
 // ── FEATURE 4: Live "typewriter" text reveal ──────────────────────────────────
+var _typewriterTimer = null;
+
 function displayReview(anim) {
   var el = document.getElementById("reviewText");
+
+  // Cancel any in-progress typewriter before starting a new one
+  if (_typewriterTimer !== null) {
+    clearTimeout(_typewriterTimer);
+    _typewriterTimer = null;
+  }
+
   currentReview = buildReview();
 
   if (anim) {
     el.textContent = "";
     var i = 0;
+    var snapshot = currentReview; // capture so concurrent calls don't share state
     function typeWriter() {
-      if (i < currentReview.length) {
-        el.textContent += currentReview.charAt(i);
+      if (i < snapshot.length) {
+        el.textContent = snapshot.slice(0, i + 1);
         i++;
-        setTimeout(typeWriter, 5);
+        _typewriterTimer = setTimeout(typeWriter, 5);
+      } else {
+        _typewriterTimer = null;
       }
     }
     typeWriter();
